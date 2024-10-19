@@ -55,36 +55,36 @@
         }
 
         .card{
-            height: 100%;
+            flex: 0 0 auto;
+            width: 280px;
+        }
+
+        .iphone-container {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            gap:20px;
+        }
+
+        .iphone-scroll-container {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-content{
-            text-align: center;
-            padding:15px;
+            overflow-x: auto;
+            white-space: nowrap;
             width: 100%;
+            padding: 20px;
         }
 
-        .product-footer{
-            margin-top: auto;
-            text-align: center;
+        .iphone-scroll-container::-webkit-scrollbar {
+            height: 15px;
         }
 
-        .product-img{
-            max-width: 100%;
-            height:auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        .iphone-scroll-container::-webkit-scrollbar-thumb {
+            background: #1F005E;
+            border-radius: 5px;
         }
 
-        .product-footer h1, .product-footer p, .product-footer a {
-            text-align: center;
+        .iphone-scroll-container::-webkit-scrollbar-track {
+            background: whitesmoke;
         }
-
     </style>
 </head>
 <body>
@@ -120,51 +120,50 @@
     <div class="content">
         <div class="catalog-container"> 
             <div class="text-center mb-3">
-                <h1 class="catalog-title">Our Catalog</h1>
+                <h1 class="catalog-title">Our Iphone Series</h1>
             </div>
             <div class="catalog-subtitle">
                 We are committed to crafting high-quality products that not only meet your needs but also enhance your everyday life. We believe in innovation and excellence, ensuring every item we create brings joy and satisfaction.
             </div>
             <div class="divider"></div>
             <div class="row"> 
-                @if ($products->isEmpty())
+                @if ($iphones->isEmpty())
                     <div class="col-12 text-center">
                         <h5 class="text-muted text-danger">Data Kosong</h5>
                     </div>
                 @else
-                    @foreach ($products as $product)
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                                <div class="p-3 text-center">
-                                    @if($product->product == 'Iphone')
-                                        <img src="{{ asset('images/iphone-mockup.png') }}" alt="iphone" class="product-img"> 
-                                    @elseif($product->product == 'Macbook')
-                                        <img src="{{ asset('images/macbook-mockup.png') }}" alt="macbook" class="product-img"> 
-                                    @endif
-                                </div>
-                                <div class="product-content p-3">
-                                    <div class="product-footer">
-                                        @if($product->product == 'Iphone')
-                                            <h1>{{ $product->product }}</h1>
-                                            <p>{{ $product->deskripsi }}</p>
-                                            <a href="{{ url ('/iphone') }}" class="btn btn-outline-dark">View Product</a>
-                                        @elseif($product->product == 'Macbook')
-                                            <h1>{{ $product->product }}</h1>
-                                            <p>{{ $product->deskripsi }}</p>
-                                            <a href="{{ url ('/macbook') }}" class="btn btn-outline-dark">View Product</a>
-                                        @endif
+                    <div class="iphone-scroll-container">
+                        <div class="iphone-container">
+                            @foreach($iphones as $iphone)
+                                <div class="col mb-3">
+                                    <div class="card">
+                                        <div class="card-body d-flex">
+                                            @if($iphone->series == 'Iphone 12')
+                                                <img src="{{ asset('images/iphone1.jpg') }}" alt="Iphone 12"
+                                                    style="width: 100%; object-fit: cover; height: 350px; margin: 0 auto; border-radius: 12px;">
+                                            @elseif($iphone->series == 'Iphone 13')
+                                                <img src="{{ asset('images/iphone2.jpg') }}" alt="Iphone 13"
+                                                    style="width: 100%; object-fit: cover; height: 350px; margin: 0 auto; border-radius: 12px;">
+                                            @elseif($iphone->series == 'Iphone 14')
+                                                <img src="{{ asset('images/iphone3.jpg') }}" alt="Iphone 14"
+                                                    style="width: 100%; object-fit: cover; height: 350px; margin: 0 auto; border-radius: 12px;">
+                                            @elseif($iphone->series == 'Iphone 15')
+                                                <img src="{{ asset('images/iphone4.jpg') }}" alt="Iphone 15"
+                                                    style="width: 100%; object-fit: cover; height: 350px; margin: 0 auto; border-radius: 12px;">
+                                            @elseif($iphone->series == 'Iphone 16')
+                                                <img src="{{ asset('images/iphone5.jpg') }}" alt="Iphone 16"
+                                                    style="width: 100%; object-fit: cover; height: 350px; margin: 0 auto; border-radius: 12px;">
+                                            @endif
+                                        </div>
+                                        <p class="card-title my-2 mx-4 text-center" style="font-weight: bold; font-size: 24px;">{{ $iphone->series }}</p>
+                                        <p class="card-title mx-4 text-center" style="text-align:center; font-size: 16px;">IDR <?php echo number_format($iphone->price, 0, ',', '.'); ?> </p>
                                     </div>
                                 </div>
-                                    
-                            </div>
+                            @endforeach
                         </div>
-                        @if (($loop->iteration % 3) == 0) 
-                            </div><div class="row"> 
-                        @endif
-                    @endforeach
-                    </div> 
+                    </div>
                 @endif
-            </div> 
+            </div>
         </div>
     </div>
 
